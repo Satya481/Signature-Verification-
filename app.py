@@ -23,12 +23,29 @@ class SiameseNet(nn.Module):
         return e1, e2
 
 # ------------------- Load Model -------------------
+import os
+from pathlib import Path
+
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-MODEL_PATH = r"C:\Users\gupta\OneDrive\Desktop\misba_model\siamese_signature.pth"
+
+# Allow MODEL_PATH to be provided via environment variable for portability.
+DEFAULT_MODEL = Path(__file__).resolve().parent / "siamese_signature.pth"
+MODEL_PATH = Path(os.environ.get("MODEL_PATH", str(DEFAULT_MODEL)))
 
 model = SiameseNet().to(DEVICE)
-model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
-model.eval()
+model_loaded = False
+load_error = None
+try:
+    if MODEL_PATH.exists():
+        model.load_state_dict(torch.load(MODEL_PATH, map_location=DEVICE))
+        model.eval()
+        model_loaded = True
+    else:
+        load_error = f"Model file not found at {MODEL_PATH}"
+        model_loaded = False
+except Exception as e:
+    load_error = str(e)
+    model_loaded = False
 
 # ------------------- Transform -------------------
 transform = transforms.Compose([

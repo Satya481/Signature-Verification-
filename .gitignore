@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual env
+venv/
+env/
+.venv/
+
+# IDEs
+.vscode/
+.idea/
+
+# Streamlit specific
+.streamlit/
+
+# Data and model files (do not commit heavy binaries)
+/signatures/
+*.pth
+*.pt
+
+# Notebook checkpoints
+.ipynb_checkpoints/
