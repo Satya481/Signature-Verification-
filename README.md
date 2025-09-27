@@ -151,7 +151,7 @@ class SiameseNet(nn.Module):
 
 ## 📜 License
 
-MIT License © 2025 Satyaprakash Gupta
+MIT License © 2025 Satya481
 
 ---
 
